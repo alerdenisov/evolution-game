@@ -1,11 +1,11 @@
-linkPrefix = ""
+linkPrefix = "evolution-game/"
 name = "evolution-game"
 license = "GPL-3.0"
 version = "0.1.0"
 description = "Evolution Game is the Trading Card Game based on smart-contracts"
 homepage = "https://github.com/DOkwufulueze/eth-vue"
 author = "Daniel Okwufulueze"
-buildTime = 2017-12-19T05:20:01.583Z
+buildTime = 2017-12-19T05:30:15.255Z
 target = "scripts/doxity"
 src = "contracts/*"
 dir = "pages/docs"
