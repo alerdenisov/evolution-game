@@ -7,6 +7,9 @@ import './EvoCreatureBase.sol';
 /// @author Aler Denisov <aler.zampillo@gmail.com>
 contract EvoCreatureToken is EvoCreatureBase, NonFungibleToken {
   // --- Token Related Store ---
+  /// @notice A mapping from creature IDs to the address that owns them. 
+  /// @dev All creature have some valid owner address.
+  mapping (uint256 => address) public creatureIdToOwner;
   
   /// @notice The map of creature confidants
   /// @param _index The index of creature
@@ -124,25 +127,11 @@ contract EvoCreatureToken is EvoCreatureBase, NonFungibleToken {
     Transfer(_from, _to, _creatureId);
   }
 
-  function _createCreature(
+  function _createCreatureFor(
     address _owner,
-
-    uint16 _attack,
-    uint16 _defence,
-    uint32 _hp,
-
-    uint8 _water,
-    uint8 _nature,
-    uint8 _toxic,
-    uint8 _beast,
-    uint8 _chaos,
-
-    uint8 _generation,
-    uint16 _seed,
-    
-    bytes16 _genesis
+    uint salt
   ) internal returns (uint256) {
-    uint256 creatureId = super._createCreature(_owner, _attack, _defence, _hp, _water, _nature, _toxic, _beast, _chaos, _generation, _seed, _genesis);
+    uint256 creatureId = super._createCreature(salt);
     _transfer(address(0x0), _owner, creatureId);
     return creatureId;
   }
