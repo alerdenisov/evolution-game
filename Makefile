@@ -1,5 +1,6 @@
 NETWORK:= "testrpc"
-
+MERGE_PATH:= "merged/"
+TEST:= ""
 .PHONY: doc
 
 doc:
@@ -17,10 +18,11 @@ clean:
 compile: node_modules
 	@echo "Begining of compilation"
 	@$(shell pwd)/node_modules/.bin/truffle compile
-	@$(shell pwd)/node_modules/.bin/sol-merger contracts/base/Crowdsale.sol merged/
-	@$(shell pwd)/node_modules/.bin/sol-merger contracts/AltCrowdsale.sol merged/
-	@$(shell pwd)/node_modules/.bin/sol-merger contracts/AltToken.sol merged/
-	@$(shell pwd)/node_modules/.bin/sol-merger contracts/UserRegistry.sol merged/
+	@make merge CONTRACT=lib/Debuggable.sol
+
+merge: 
+	@echo "Merging contract: $(value CONTRACT)"
+	@$(shell pwd)/node_modules/.bin/sol-merger contracts/$(value CONTRACT) $(shell pwd)/$(value MERGE_PATH)
 
 install: migrate
 	@echo "installation complete"
@@ -40,7 +42,7 @@ node_modules:
 	npm install
 
 test: compile
-	@$(shell pwd)/node_modules/.bin/truffle --network=$(value NETWORK) test test/crowdsale.js
+	@$(shell pwd)/node_modules/.bin/truffle --network=$(value NETWORK) test $(value TEST)
 
 link: compile
 	@$(shell pwd)/node_modules/.bin/remixd -S $(shell pwd)/merged
