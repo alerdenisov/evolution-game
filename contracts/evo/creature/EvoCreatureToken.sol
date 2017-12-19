@@ -123,4 +123,27 @@ contract EvoCreatureToken is EvoCreatureBase, NonFungibleToken {
     // Emit the transfer event.
     Transfer(_from, _to, _creatureId);
   }
+
+  function _createCreature(
+    address _owner,
+
+    uint16 _attack,
+    uint16 _defence,
+    uint32 _hp,
+
+    uint8 _water,
+    uint8 _nature,
+    uint8 _toxic,
+    uint8 _beast,
+    uint8 _chaos,
+
+    uint8 _generation,
+    uint16 _seed,
+    
+    bytes16 _genesis
+  ) internal returns (uint256) {
+    uint256 creatureId = super._createCreature(_owner, _attack, _defence, _hp, _water, _nature, _toxic, _beast, _chaos, _generation, _seed, _genesis);
+    _transfer(address(0x0), _owner, creatureId);
+    return creatureId;
+  }
 }
