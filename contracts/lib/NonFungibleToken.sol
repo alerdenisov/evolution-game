@@ -1,9 +1,7 @@
 pragma solidity ^0.4.18;
 
-/// @title Interface for contracts conforming to ERC-721: Non-Fungible Tokens
-/// @author Dieter Shirley <dete@axiomzen.co> (https://github.com/dete)
 contract NonFungibleToken {
-  function implementsERC721() public pure returns (bool);
+  function implementsNonFungibleToken() public pure returns (bool);
   function totalSupply() public view returns (uint256 total);
   function balanceOf(address _owner) public view returns (uint256 balance);
   function ownerOf(uint256 _tokenId) public view returns (address owner);
