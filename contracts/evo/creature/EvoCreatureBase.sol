@@ -57,7 +57,7 @@ contract EvoCreatureBase {
       uint16 _attack, uint16 _defence, uint32 _hp,
       uint8 _water, uint8 _nature, uint8 _toxic, uint8 _beast, uint8 _chaos,
       uint8 _generation, uint16 _seed,
-      uint16 _genesis
+      bytes16 _genesis
   );
 
   // --- Internal methods ---
@@ -77,14 +77,14 @@ contract EvoCreatureBase {
 
     uint8 _generation,
     uint16 _seed,
-    
+
     bytes16 _genesis
   ) internal returns (uint256) {
     Creature memory creature = Creature({
       birthTime: uint32(block.timestamp),
       feed: 128,
       moral: 128,
-      injure: 0
+      injure: 0,
       
       water: 0,
       nature: 0,
@@ -102,7 +102,7 @@ contract EvoCreatureBase {
       geneNature: _nature,
       geneToxic: _toxic,
       geneBeast: _beast,
-      geneChaos: _chaos
+      geneChaos: _chaos,
       
       generation: _generation,
       seed: _seed,

@@ -79,7 +79,7 @@ contract EvoCreatureToken is EvoCreatureBase, NonFungibleToken {
     require(ownerOf(_creatureId) == _from);
 
     // Reassign ownership (also clears pending approvals and emits Transfer event).
-    _transfer(_from, _to, _tokenId);
+    _transfer(_from, _to, _creatureId);
   }
 
   /// @notice test
@@ -92,7 +92,7 @@ contract EvoCreatureToken is EvoCreatureBase, NonFungibleToken {
     require(ownerOf(_creatureId) == msg.sender);
 
     // Reassign ownership, clear pending approvals, emit Transfer event.
-    _transfer(msg.sender, _to, _tokenId);
+    _transfer(msg.sender, _to, _creatureId);
   }
 
   // --- Internal logic (state change) ---
