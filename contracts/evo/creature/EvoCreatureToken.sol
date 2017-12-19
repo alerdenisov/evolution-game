@@ -73,27 +73,54 @@ contract EvoCreatureToken is EvoCreatureBase, NonFungibleToken {
 
   /// @notice test
   ///  multiple
-  function transferFrom(address _from, address _to, uint256 _tokenId) public {
+  function transferFrom(address _from, address _to, uint256 _creatureId) public {
+    // Check for approval and valid ownership
+    require(allowed(_creatureId, msg.sender));
+    require(ownerOf(_creatureId) == _from);
 
+    // Reassign ownership (also clears pending approvals and emits Transfer event).
+    _transfer(_from, _to, _tokenId);
   }
 
   /// @notice test
   /// @dev hello
   /// @dev second dev
-  function transfer(address _to, uint256 _tokenId) public {
+  function transfer(address _to, uint256 _creatureId) public {
+    // Safety check to prevent against an unexpected 0x0 default.
+    require(_to != address(0));
+    // You can only send your own creature.
+    require(ownerOf(_creatureId) == msg.sender);
 
+    // Reassign ownership, clear pending approvals, emit Transfer event.
+    _transfer(msg.sender, _to, _tokenId);
   }
 
   // --- Internal logic (state change) ---
 
-  /**
-    @notice Internal method to setup allowance to transfer creature without strict ownership
-    @param _confidant The address of confidant to transfer creature
-    @param _creatureId The index of creature
-    @dev Method doesn't fire any events and just change state! 
-         Method doesn't make any checks! 
-  */
+  /// @notice Internal method to setup allowance to transfer creature without strict ownership
+  /// @param _confidant The address of confidant to transfer creature
+  /// @param _creatureId The index of creature
+  /// @dev Method doesn't fire any events and just change state! 
+  ///      Method doesn't make any checks! 
   function _approve (uint256 _creatureId, address _confidant) internal {
     creatureIndexApprove[_creatureId] = _confidant;
+  }
+
+  /// @notice Internal method to transfer a specific creature from one address to another
+  /// @dev Assigns ownership of a specific creature to an address.
+  function _transfer(address _from, address _to, uint256 _creatureId) internal {
+    // there is no way to overflow this (creatures capped in uint32)
+    ownershipCreaturesCount[_to]++;
+    // transfer ownership
+    creatureIdToOwner[_creatureId] = _to;
+    // When creating new kittens _from is 0x0, but we can't account that address.
+    if (_from != address(0)) {
+        ownershipCreaturesCount[_from]--;
+        // clear any previously approved ownership exchange
+        delete creatureIndexApprove[_creatureId];
+    }
+
+    // Emit the transfer event.
+    Transfer(_from, _to, _creatureId);
   }
 }
