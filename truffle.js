@@ -1,11 +1,20 @@
+require('babel-polyfill');
+require('babel-register')({
+     // Ignore everything in node_modules except node_modules/zeppelin-solidity. 
+     presets: ['es2015'],
+     plugins: ['syntax-async-functions','transform-regenerator'],
+     ignore: /node_modules\/(?!zeppelin-solidity)/, 
+ });
+
 module.exports = {
   networks: {
-    development: {
-      host: "localhost",
-      port: 7545, // This is the Ganache default port. You can change it to the conventional 8545 if your network runs on 8545
-      network_id: "*", // Match any network id. You may need to replace * with your network Id
-      from: "", // Add your unlocked account within the double quotes
-      gas: 4444444
+    testrpc: {
+      // gas: 4.5 * 1e6,
+      gasPrice: 1,
+      network_id: '*',
+      host: 'localhost',
+      port: 8545,
+      from: '0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1'     // Use the address we derived
     }
   }
 };
