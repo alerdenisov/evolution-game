@@ -41,7 +41,7 @@ migrateHard: clean compile
 node_modules:
 	npm install
 
-test: compile
+test: clean compile
 	@$(shell pwd)/node_modules/.bin/truffle --network=$(value NETWORK) test $(value TEST)
 
 link: compile
