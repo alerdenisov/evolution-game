@@ -1,12 +1,15 @@
 pragma solidity ^0.4.18;
 
+/// @title Base contract of EvoCreature structure
+/// @author Aler Denisov <aler.zampillo@gmail.com>
 contract EvoCreatureBase {
   /// @notice Creature data specification
-  /// @dev ensure that it fits neatly into exactly two 256-bit words. 
-  /// @dev Because of the byte-packing rules used by Ethereum. [Ref](http://solidity.readthedocs.io/en/develop/miscellaneous.html)
+  /// @dev Ensure that it fits neatly into exactly two 256-bit words. 
+  ///      Because of the byte-packing rules used by Ethereum. 
+  ///      [Ref](http://solidity.readthedocs.io/en/develop/miscellaneous.html)
   struct Creature {
     /// @notice The timestamp from the block when this creatures came into existence.
-    /// @notice {{t:uint32}} is huge enough to hold date before **02/07/2106 @ 6:28am (UTC)**
+    /// @notice Uint32 is huge enough to hold date before **02/07/2106 @ 6:28am (UTC)**
     /// @dev Timestamp in UNIX specification. [Ref](https://en.wikipedia.org/wiki/Unix_time)
     uint32 birthTime;
 
@@ -19,7 +22,7 @@ contract EvoCreatureBase {
   }
 
   /// @notice List of all existed creatures in game
-  /// @dev The array index is a creature ID
+  /// @dev The array index is a creature ID 
   Creature[] internal creatures;
 
   /// @notice A mapping from creature IDs to the address that owns them. 
