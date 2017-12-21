@@ -59,6 +59,16 @@ contract EvoCreatureBase is Debuggable {
   Creature[] internal creatures;
 
   /// @notice Birth event fires each time when new creature is created
+  /// @param creatureId The index of born creature
+  /// @param attack Base attack power of the creature
+  /// @param defence Base defence rate of the creature
+  /// @param hp Base health point of the creature
+  /// @param genes Tide-packed genes of the creature
+  ///        \n 00-08 – magic
+  ///        \n 08-16 – nature
+  ///        \n 16-24 – toxic
+  ///        \n 24-32 – beast
+  ///        \n 32-40 – chaos
   event Birth(
       uint32 indexed creatureId,
       uint16 attack, uint16 defence, uint32 hp,
@@ -72,11 +82,11 @@ contract EvoCreatureBase is Debuggable {
     uint16 defence =    uint16(_randomRange(salt + 2, MIN_DEF, MAX_DEF));
     uint32 hp =         uint32(_randomRange(salt + 3, MIN_HP, MAX_HP));
 
-    uint40 genes =      uint40(_randomRange(salt + 4, MIN_GEN, MAX_GEN) << 0);          // water
-    genes |=            uint40(_randomRange(salt + 5, MIN_GEN, MAX_GEN) << 8);          // nature
-    genes |=            uint40(_randomRange(salt + 6, MIN_GEN, MAX_GEN) << 16);         // toxic
-    genes |=            uint40(_randomRange(salt + 7, MIN_GEN, MAX_GEN) << 24);         // beast
-    genes |=            uint40(_randomRange(salt + 8, MIN_GEN, MAX_GEN) << 32);         // chaos
+    uint40 genes  = uint40(_randomRange(salt + 4, MIN_GEN, MAX_GEN) << 0);          // water
+           genes |= uint40(_randomRange(salt + 5, MIN_GEN, MAX_GEN) << 8);          // nature
+           genes |= uint40(_randomRange(salt + 6, MIN_GEN, MAX_GEN) << 16);         // toxic
+           genes |= uint40(_randomRange(salt + 7, MIN_GEN, MAX_GEN) << 24);         // beast
+           genes |= uint40(_randomRange(salt + 8, MIN_GEN, MAX_GEN) << 32);         // chaos
 
     bytes16 genesis = bytes16(1);
 
