@@ -1,0 +1,19 @@
+$color-dark-gray: #272b2e !default;
+$color-orange: #DA8224 !default;
+$color-red: #E23939 !default;
+$color-blue: #5e9ae9 !default;
+$color-green: #80cc34 !default;
+$color-pink: #B546FF !default;
+
+
+$color-attack: $color-orange !default;
+$color-health: $color-red !default;
+$color-water: $color-blue !default;
+$color-nature: $color-green !default;
+$color-beast: $color-orange !default;
+$color-chaos: $color-red !default;
+$color-toxic: $color-pink !default; 
+$color-badge-bg: $color-dark-gray !default;
+
+
+p { margin: 0; }
