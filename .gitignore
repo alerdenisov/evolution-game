@@ -3,3 +3,5 @@ build/contracts
 merged
 .vscode
 *.bak
+static/images/monsters
+.DS_Store
