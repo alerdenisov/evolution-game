@@ -14,6 +14,19 @@ $color-beast: $color-orange !default;
 $color-chaos: $color-red !default;
 $color-toxic: $color-pink !default; 
 $color-badge-bg: $color-dark-gray !default;
+$color-field-bg: darken($color-dark-gray, 3%) !default;
+$color-page-bg: $color-dark-gray !default;
 
+$card-base-width: 40rem !default;
+$card-base-height: 60rem !default;
+$card-medium-multiplier: 0.8 !default;
+$card-small-multiplier: 0.6 !default;
+$card-thumb-multiplier: 0.35 !default;
+$card-base-border-size: 1.5rem !default;
+$card-base-border-radius: 1.5rem !default;
+
+* { 
+  box-sizing: border-box;
+}
 
 p { margin: 0; }

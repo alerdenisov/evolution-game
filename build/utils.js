@@ -51,7 +51,7 @@ exports.cssLoaders = function (options) {
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { 
       indentedSyntax: true,
-      resources: '@/styles/style.scss'
+      resources: '../src/styles/style.scss'
     }),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
