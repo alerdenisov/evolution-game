@@ -4,7 +4,8 @@
       v-for='card, index in hand' 
       :ref='`game-hand__handle-${index}`'
       :class="b('handle', modifiers, selectedCard === index && 'game-hand__handle--selected')"
-      :style="`transform: rotate(${calculateRotation(index)}deg)`"
+      @mouseover="() => selectCard(index)"
+      @mouseout="() => unselectCard(index)"
     )
       game-card(
         :title='card.title' 
@@ -14,15 +15,6 @@
         :picture='card.picture' 
         :class="b('card', modifiers)"
       )
-    
-    div(
-      v-for='card, index in hand' 
-      :ref='`game-hand__handle-${index}`'
-      :class="b('handle', modifiers, 'game-hand__handle--hitbox')"
-      :style="`transform: rotate(${calculateRotation(index)}deg)`"
-      @mouseover='() => selectCard(key, index)' 
-      @mouseout='() => unselectCard(key, index)'
-    )
 </template>
 
 <script>
@@ -53,11 +45,11 @@ export default {
   },
 
   methods: {
-    selectCard (key, index) {
+    selectCard (index) {
       console.log('select', index)
       this.selectedCard = index
     },
-    unselectCard (key, index) {
+    unselectCard (index) {
       console.log('unselect', index)
       this.selectedCard = -1
     },
@@ -75,17 +67,18 @@ export default {
 @import '../../styles/style.scss';
 
 .game-hand {
-  position: absolute;
+  display: flex;
+  width: 80%;
 
   &__handle {
-    position: absolute;
-    top: 0;
-    padding-bottom: 300px;
+    position: relative;
     transform-origin: center bottom;
-    transform: rotate(0);
     transition: all 0.5s ease;
     z-index: 1;
-    pointer-events: none;
+    flex-shrink: 1;
+    flex-grow: 1;
+    height: $card-base-height * $card-medium-multiplier + 30rem;
+    // pointer-events: none;
 
     // $elements: 10;
     // @for $i from 0 to $elements {
@@ -95,22 +88,23 @@ export default {
     // }
 
     &--selected {
-      transform: rotate(10deg) !important;
-      padding-bottom: 500px;
-      top: -200px;
+      // transform: rotate(10deg) !important;
+      // padding-bottom: 500px;
+      // top: -200px;
       z-index: 2;
+      transform: translateY(-100px)
     }
 
     &--hitbox {
       width: $card-base-width * $card-medium-multiplier;
       height: $card-base-height * $card-medium-multiplier + 30rem;
       // border: 2px solid red;
-      pointer-events: auto;
+      // pointer-events: auto;
     }
   }
 
   &__card {
-    // position: absolute;
+    position: absolute;
     z-index: 1;
     pointer-events: none;
   }
