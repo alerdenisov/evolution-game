@@ -7,7 +7,7 @@
       //- game-card(title='Prynoth' size='medium' type='resource' quality='common' :picture='`/static/images/monsters/card-common0${("00000" + Math.floor(Math.random() * 100)).slice(-3)}.png`')
       //- game-card(title='Prynoth' size='small' quality='common' :picture='`/static/images/monsters/card-common0${("00000" + Math.floor(Math.random() * 100)).slice(-3)}.png`')
 
-    game-hand(:hand='hands.player' :side='player')
+    game-hand(:hand='hands.player' side='player')
 </template>
 
 <script>
