@@ -77,10 +77,10 @@ export default {
   },
 
   mounted () {
-    setInterval(() => {
-      this.hands.player = randomHand()
-      this.fields.player = randomField()
-    }, 3500)
+    // setInterval(() => {
+    //   this.hands.player = randomHand()
+    //   this.fields.player = randomField()
+    // }, 3500)
   }
 }
 </script>
