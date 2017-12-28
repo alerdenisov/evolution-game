@@ -7,16 +7,17 @@
       //- game-card(title='Prynoth' size='medium' type='resource' quality='common' :picture='`/static/images/monsters/card-common0${("00000" + Math.floor(Math.random() * 100)).slice(-3)}.png`')
       //- game-card(title='Prynoth' size='small' quality='common' :picture='`/static/images/monsters/card-common0${("00000" + Math.floor(Math.random() * 100)).slice(-3)}.png`')
 
-    game-hand
+    game-hand(:hand='hands.player' :side='player')
 </template>
 
 <script>
 import GameField from '@/components/game/GameField.vue'
-// import GameHand from '@/components/game/GameHand.vue'
+import GameHand from '@/components/game/GameHand.vue'
 
 export default {
   components: {
-    GameField
+    GameField,
+    GameHand
   },
   data () {
     // mock field
@@ -24,6 +25,7 @@ export default {
       return {
         title: 'Prynoth',
         picture: `/static/images/monsters/card-common0${('00000' + Math.floor(Math.random() * 100)).slice(-3)}.png`,
+        quality: 'common',
         active: false
       }
     }
@@ -44,10 +46,25 @@ export default {
       return field
     }
 
+    function randomHand () {
+      let count = 2 + Math.floor(Math.random() * 5)
+      const hand = []
+
+      while (count > 0) {
+        hand.push(randomCard())
+        count--
+      }
+
+      return hand
+    }
+
     return {
       fields: {
         opponent: randomField(),
         player: randomField()
+      },
+      hands: {
+        player: randomHand()
       }
     }
   }
