@@ -2,14 +2,22 @@
   div(:class='b(modifiers)')
     img(:class="b('picture', modifiers)" :src='picture')
     div(:class="b('stats', modifiers)")
-      evo-badge(stick='left', size='large' :value='Math.floor(Math.random() * 250)' type='attack', :class="b('stats-badge', modifiers)")
-      evo-badge(stick='right', size='large' :value='Math.floor(Math.random() * 250)' type='health', :class="b('stats-badge', modifiers)")
+      evo-badge(stick='left', size='large' :value='attributes.attack' type='attack', :class="b('stats-badge', modifiers)")
+      evo-badge(stick='right', size='large' :value='attributes.health' type='health', :class="b('stats-badge', modifiers)")
     div(:class="b('genes', modifiers)")
-      evo-badge(stick='left', size='small' :value='Math.floor(Math.random() * 250)' type='nature', :class="b('genes-badge', modifiers)")
-      evo-badge(stick='left', size='small' :value='Math.floor(Math.random() * 250)' type='water', :class="b('genes-badge', modifiers)")
-      evo-badge(stick='left', size='small' :value='Math.floor(Math.random() * 250)' type='beast', :class="b('genes-badge', modifiers)")
-      evo-badge(stick='left', size='small' :value='Math.floor(Math.random() * 250)' type='toxic', :class="b('genes-badge', modifiers)")
-      evo-badge(stick='left', size='small' :value='Math.floor(Math.random() * 250)' type='chaos', :class="b('genes-badge', modifiers)")
+      evo-badge(
+        v-for='attr, key in genes'
+        v-if='attr'
+        stick='left', 
+        size='small' 
+        :type='key' 
+        :value='attr' 
+        :class="b('genes-badge', modifiers)"
+      )
+      //- evo-badge(stick='left', size='small' type='water' :value='attributes.water' :class="b('genes-badge', modifiers)")
+      //- evo-badge(stick='left', size='small' type='beast' :value='attributes.beast' :class="b('genes-badge', modifiers)")
+      //- evo-badge(stick='left', size='small' type='toxic' :value='attributes.toxic' :class="b('genes-badge', modifiers)")
+      //- evo-badge(stick='left', size='small' type='chaos' :value='attributes.chaos' :class="b('genes-badge', modifiers)")
     //- h3(:class="b('title', modifiers)") {{ title }}
     <svg viewBox="0 0 829 146.08" :class="b('title', modifiers)">
       <path :class="b('title-arc', modifiers)" d="M0,20.8c275.6-27.7,553.4-27.7,829,0c-4.2,41.8-8.4,83.6-12.6,125.3c-267.3-26.8-536.6-26.8-803.8,0C8.4,104.3,4.2,62.5,0,20.8z"/>
@@ -37,7 +45,7 @@ import EvoBadge from './Badge.vue'
 
 export default {
   name: 'game-card',
-  props: ['title', 'picture', 'size', 'type', 'quality', 'height'],
+  props: ['title', 'attributes', 'genes', 'picture', 'size', 'type', 'quality', 'height'],
   components: {
     EvoBadge
   },
@@ -240,8 +248,7 @@ export default {
       justify-content: center;
       align-items: center;
 
-
-      animation: description-element 0.3s ease 0.25s 1 both;
+      // animation: description-element 0.3s ease 0.25s 1 both;
 
       &--size {
         &-medium { padding: 0 1.5rem }
@@ -252,9 +259,11 @@ export default {
     &__about,
     &__state {
       text-align: center;
+      animation: fade-element 0.3s ease 0.15s 1 both;
     }
 
     &__about {
+      animation-delay: 0.25s;
       &--size {
         // &-medium,
         &-small { display: none; }
