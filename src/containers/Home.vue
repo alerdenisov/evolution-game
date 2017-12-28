@@ -21,15 +21,21 @@ export default {
   data () {
     // mock field
     function randomGenes () {
-      let result = {}
-      let genetypes = ['nature', 'water', 'beast', 'chaos', 'toxic']
+      const result = {}
+      const genetypes = ['nature', 'water', 'beast', 'chaos', 'toxic']
       let count = 1 + Math.floor(Math.random() * 2)
+      const left = 100
+      const weights = Array(count).fill(0).map(w => Math.random())
+      const weightsLength = 1 / weights.reduce((acc, w) => { acc += w; return acc }, 0)
+      const normalizedWeights = weights.map(w => w * weightsLength)
+      console.log('weights', weights)
+      console.log('normalized', normalizedWeights)
+
       while (count > 0) {
         const geneIndex = Math.floor(Math.random() * genetypes.length)
         const gene = genetypes[geneIndex]
-        genetypes = genetypes.splice(geneIndex, 1)
-
-        result[gene] = 20 + Math.floor(Math.random() * 30)
+        genetypes.splice(geneIndex, 1)
+        result[gene] = Math.floor(left * normalizedWeights[count - 1])
         count--
       }
 
