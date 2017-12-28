@@ -15,42 +15,9 @@ import GameCard from '@/components/game/GameCard.vue'
 
 export default {
   name: 'game-field',
-  props: [],
+  props: ['fields'],
   components: {
     GameCard
-  },
-  data () {
-    // mock field
-    function randomCard () {
-      return {
-        title: 'Prynoth',
-        picture: `/static/images/monsters/card-common0${('00000' + Math.floor(Math.random() * 100)).slice(-3)}.png`,
-        active: false
-      }
-    }
-
-    function randomField () {
-      const field = []
-      for (let row = 0; row < 3; row++) {
-        field[row] = []
-        for (let cell = 0; cell < 3; cell++) {
-          if (Math.random() > 0.5) {
-            field[row].push(randomCard())
-          } else {
-            field[row].push({})
-          }
-        }
-      }
-
-      return field
-    }
-
-    return {
-      fields: {
-        opponent: randomField(),
-        player: randomField()
-      }
-    }
   },
   methods: {
     selectCard (key, row, cell) {
