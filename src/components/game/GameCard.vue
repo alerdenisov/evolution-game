@@ -37,17 +37,18 @@ import EvoBadge from './Badge.vue'
 
 export default {
   name: 'game-card',
-  props: ['title', 'picture', 'size', 'type', 'quality'],
+  props: ['title', 'picture', 'size', 'type', 'quality', 'height'],
   components: {
     EvoBadge
   },
   computed: {
     modifiers () {
-      const { size, type, quality } = this
+      const { size, type, quality, height } = this
       return {
         size,
         type,
-        quality
+        quality,
+        height
       }
     }
   }
@@ -56,14 +57,27 @@ export default {
 
 
 <style lang="scss">
-  $card-base-width: 40rem !default;
-  $card-base-height: 60rem !default;
+  @import '../../styles/style.scss';
 
-  $card-base-border-size: 1.5rem !default;
-  $card-base-border-radius: 1.5rem !default;
+  @keyframes fade-element {
+    0% { opacity: 0 }
+    100% { opacity: 1 }
+  }
 
-  $card-medium-multiplier: 0.8 !default;
-  $card-small-multiplier: 0.6 !default;
+  @keyframes scale-element {
+    0% { transform: scale(1.5) }
+    100% { transform: scale(1) }
+  }
+
+  @keyframes description-element {
+    // 0% { transform: scale(1.2) }
+    // 100% { transform: none }
+  }
+
+  @keyframes genes-badge {
+    0% { opacity: 0; transform: translateY(-30px) }
+    100% { opacity: 1; transform: translateY(1px) }
+  }
 
   .game-card {
     position: relative;
@@ -80,7 +94,15 @@ export default {
     border-style: solid;
     border-color: #1b1918;
 
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
+    user-select: none;
+    
+    * {
+      transition: all 0.25s ease;
+    }
+
+    // dirty sort hack
+    > * { z-index: 1 }
 
     &__picture {
       position: absolute;
@@ -105,6 +127,12 @@ export default {
         &-small { 
           margin: 0 (-$card-base-border-size * $card-small-multiplier); 
           margin-top: 1rem;
+        }
+        
+        &-thumb {
+          margin: 0;
+          margin-top: 7.5rem;
+          padding: 0 0.2rem;
         }
       }
     }
@@ -136,6 +164,14 @@ export default {
 
     &__genes-badge { 
       margin-bottom: 1rem; 
+      animation: genes-badge 0.4s ease 0s 1 both;
+
+      $elements: 15;
+      @for $i from 0 to $elements {
+        &:nth-child(#{$i}) {
+          animation-delay: 0.1s * $i;
+        }
+      }
 
       &--size {
         &-medium {
@@ -153,6 +189,7 @@ export default {
       &--size {
         &-medium { font-size: 3rem !important; }
         &-small { font-size: 2.5rem !important; }
+        &-thumb { font-size: 2rem !important; }
       }
     }
 
@@ -161,6 +198,9 @@ export default {
       margin-top: 3rem;
       margin-bottom: -1.5rem;
       z-index: 2;
+
+      // animation: scale-element 0.6s ease 0s 1 forward;
+      animation: scale-element 0.4s ease 0s 1 both;
 
       &--size {
         &-medium { 
@@ -184,6 +224,8 @@ export default {
         font-size: 8.2rem;
         fill: white;
         font-family: 'PT Serif', serif;
+
+        animation: fade-element 0.3s ease 0.15s 1 both;
       }
     }
 
@@ -197,6 +239,9 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+
+      animation: description-element 0.3s ease 0.25s 1 both;
 
       &--size {
         &-medium { padding: 0 1.5rem }
@@ -213,6 +258,24 @@ export default {
       &--size {
         // &-medium,
         &-small { display: none; }
+      }
+    }
+
+    &__genes,
+    &__title,
+    &__description {
+      &--size {
+        &-thumb { 
+          display: none; 
+        }
+      }
+    }
+
+    &__stats {
+      &--size {
+        &-thumb {
+          .badge__icon { display: none; }
+        }
       }
     }
 
@@ -251,6 +314,28 @@ export default {
         border-width: $card-base-border-size * $card-small-multiplier; 
         border-radius: $card-base-border-radius * $card-small-multiplier;
       }
+      &-thumb {
+        width: $card-base-width * $card-thumb-multiplier;
+        height: $card-base-height * $card-thumb-multiplier * 0.83;
+        border-width: $card-base-border-size * $card-thumb-multiplier; 
+        border-radius: 100%; //$card-base-border-radius * $card-thumb-multiplier;
+
+        overflow: hidden;
+        justify-content: center;
+      }
+    }
+
+    &--height {
+
+      $elements: 11;
+      @for $i from 0 to $elements {
+        $h: $i / 10;
+        &-#{$i} {
+          box-shadow: (-6px * $h) (45px * $h) (124px * $h) rgba(0, 0, 0, 0.4), (-20px * $h) (34px * $h) (14px * $h) rgba(0, 0, 0, 0.1);
+        }
+      }
+
+      
     }
   }
 </style>
