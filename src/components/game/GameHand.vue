@@ -1,7 +1,19 @@
 <template lang="pug">
   div(:class="b(modifiers)")
-    div(:class="b('handle', modifiers)" v-for='card, index in hand' :ref='`game-hand__handle-${index}`')
-      game-card(:title='card.title' :height='2' size='medium' :quality='card.quality' :picture='card.picture' :class="b('card', modifiers)")
+    div(
+      v-for='card, index in hand' 
+      :ref='`game-hand__handle-${index}`'
+      :class="b('handle', modifiers)"
+      :style="`transform: rotate(${calculateRotation(index)}deg)`"
+    )
+      game-card(
+        :title='card.title' 
+        :height='2' 
+        size='medium' 
+        :quality='card.quality' 
+        :picture='card.picture' 
+        :class="b('card', modifiers)"
+      )
 </template>
 
 <script>
@@ -15,6 +27,12 @@ export default {
     GameCard
   },
 
+  data () {
+    return {
+      animationTimeout: null
+    }
+  },
+
   computed: {
     modifiers () {
       const { side } = this
@@ -24,12 +42,12 @@ export default {
     }
   },
 
-  mounted () {
-    const cardRefs = Object.keys(this.$refs).filter(ref => ref.startsWith('game-hand__handle-'))
-    const step = Math.min(10, 30 / (cardRefs.length - 1))
-    cardRefs.forEach((cardRef, index) => {
-      this.$refs[cardRef][0].style.transform = `rotate(${step * index}deg)`
-    })
+  methods: {
+    calculateRotation (index) {
+      const count = Object.keys(this.hand).length
+      const step = Math.min(10, 30 / (count - 1))
+      return step * index
+    }
   }
 }
 </script>
@@ -42,6 +60,8 @@ export default {
     position: absolute;
     padding-bottom: 300px;
     transform-origin: center bottom;
+    transform: rotate(0);
+    transition: all 0.5s ease;
 
     // $elements: 10;
     // @for $i from 0 to $elements {

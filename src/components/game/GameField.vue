@@ -2,8 +2,20 @@
   div(:class="b(modifiers)")
     div(:class="b('side', getModifiers(key))" v-for='field, key in fields')
       div(:class="b('row', getModifiers(key))" v-for='row, rowIndex in field')
-        div(v-if='cell.title' :class="b('field', getModifiers(key), cell.active && 'game-field__field--active' )" v-for='cell, cellIndex in row' @mouseover='() => selectCard(key, rowIndex, cellIndex)' @mouseout='() => unselectCard(key, rowIndex, cellIndex)')
-          game-card(v-if='cell.title' :title='cell.title' :height='cell.active ? 10 : 0' :size='cell.active ? "medium" : "thumb"' quality='common' :picture='cell.picture')
+        div(
+          v-if='cell.title'
+          :class="b('field', getModifiers(key), cell.active && 'game-field__field--active' )" 
+          v-for='cell, cellIndex in row' 
+          @mouseover='() => selectCard(key, rowIndex, cellIndex)' 
+          @mouseout='() => unselectCard(key, rowIndex, cellIndex)')
+          game-card(
+            v-if='cell.title' 
+            :title='cell.title' 
+            :height='cell.active ? 10 : 0' 
+            :size='cell.active ? "medium" : "thumb"' 
+            quality='common' 
+            :picture='cell.picture'
+            :class="b('card', getModifiers(key))")
     //- div(:class="b('side', opponentModifiers)")
       div(:class="b('row', opponentModifiers)" v-for='row, rowIndex in field.opponent')
         div(:class="b('field', opponentModifiers)" v-for='cell, index in row')
