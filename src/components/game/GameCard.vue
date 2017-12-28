@@ -240,8 +240,7 @@ export default {
       justify-content: center;
       align-items: center;
 
-
-      animation: description-element 0.3s ease 0.25s 1 both;
+      // animation: description-element 0.3s ease 0.25s 1 both;
 
       &--size {
         &-medium { padding: 0 1.5rem }
@@ -252,9 +251,11 @@ export default {
     &__about,
     &__state {
       text-align: center;
+      animation: fade-element 0.3s ease 0.15s 1 both;
     }
 
     &__about {
+      animation-delay: 0.25s;
       &--size {
         // &-medium,
         &-small { display: none; }
