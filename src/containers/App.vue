@@ -19,6 +19,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 1.6rem;
   background-color: $color-page-bg;
+  overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
